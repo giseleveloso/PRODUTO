@@ -19,47 +19,47 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/fornecedores")
 public class FornecedorResource {
 
-     @Inject
-        public FornecedorRepository fornecedorRepository;
+    //  @Inject
+    //     public FornecedorRepository fornecedorRepository;
 
-    @GET
-    public List<Fornecedor> findAll() {
-        return Fornecedor.listAll();
-    }
+    // @GET
+    // public List<Fornecedor> findAll() {
+    //     return Fornecedor.listAll();
+    // }
 
-    @Path("/{id}")
-    public Fornecedor findById(@PathParam("id") Long id) {
-        return fornecedorRepository.findById(id);
-    }
+    // @Path("/{id}")
+    // public Fornecedor findById(@PathParam("id") Long id) {
+    //     return fornecedorRepository.findById(id);
+    // }
 
-    @GET
-    @Path("/search/nome/{nome}")
-    public List<Fornecedor> findByNome(@PathParam("nome") String nome) {
-        return fornecedorRepository.findByNome(nome);
-    }
+    // @GET
+    // @Path("/search/nome/{nome}")
+    // public List<Fornecedor> findByNome(@PathParam("nome") String nome) {
+    //     return fornecedorRepository.findByNome(nome);
+    // }
     
 
-    @POST
-    @Transactional
-    public Fornecedor create(Fornecedor fornecedor) {
-        fornecedorRepository.persist(fornecedor);
-        return fornecedor;
-    }
+    // @POST
+    // @Transactional
+    // public Fornecedor create(Fornecedor fornecedor) {
+    //     fornecedorRepository.persist(fornecedor);
+    //     return fornecedor;
+    // }
 
-    @PUT
-    @Transactional
-    @Path("/{id}")
-    public void update(@PathParam("id") Long id, Fornecedor fornecedor) {
-        Fornecedor fornecedorBanco =  fornecedorRepository.findById(id);
+    // @PUT
+    // @Transactional
+    // @Path("/{id}")
+    // public void update(@PathParam("id") Long id, Fornecedor fornecedor) {
+    //     Fornecedor fornecedorBanco =  fornecedorRepository.findById(id);
 
-        fornecedorBanco.setNome(fornecedor.getNome());
+    //     fornecedorBanco.setNome(fornecedor.getNome());
   
-    }
+    // }
 
-    @DELETE
-    @Transactional
-    @Path("/{id}")
-    public void delete(@PathParam("id") Long id) {
-        fornecedorRepository.deleteById(id);
-    }
+    // @DELETE
+    // @Transactional
+    // @Path("/{id}")
+    // public void delete(@PathParam("id") Long id) {
+    //     fornecedorRepository.deleteById(id);
+    // }
 }
