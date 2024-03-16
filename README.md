@@ -1,4 +1,4 @@
-# psicologia-quarkus-tp1
+# produto personalizado
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
