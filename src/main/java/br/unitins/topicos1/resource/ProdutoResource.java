@@ -6,8 +6,11 @@ import br.unitins.topicos1.dto.ProdutoDTO;
 import br.unitins.topicos1.dto.ProdutoResponseDTO;
 import br.unitins.topicos1.model.Produto;
 import br.unitins.topicos1.repository.ProdutoRepository;
+import br.unitins.topicos1.service.ProdutoService;
 import jakarta.inject.Inject;
+import jakarta.transaction.Status;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -16,66 +19,50 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Path("/produtos")
 public class ProdutoResource {
 
-    //  @Inject
-    //     public ProdutoRepository produtoRepository;
+    @Inject
+        public ProdutoService produtoService;
 
-    // @GET
-    // public List<ProdutoResponseDTO> findAll() {
-    //     return produtoRepository.listAll().stream().map(p -> ProdutoResponseDTO.valueOf(p)).toList();
-    // }
+    @GET
+    @Path("/{id}")
+    public Response findById(@PathParam("id") Long id) {
+        return Response.ok(produtoService.findById(id)).build();
+    }
 
-    // @Path("/{id}")
-    // public ProdutoResponseDTO findById(@PathParam("id") Long id) {
-    //     return ProdutoResponseDTO.valueOf(produtoRepository.findById(id));
-    // }
+    @GET
+    public Response findAll() {
+        return Response.ok(produtoService.findAll()).build();
+    }
 
-    // @GET
-    // @Path("/search/nome/{nome}")
-    // public List<ProdutoResponseDTO> findByNome(@PathParam("nome") String nome) {
-    //     return produtoRepository.findByNome(nome).stream()
-    //     .map(p -> ProdutoResponseDTO.valueOf(p)).toList();
-    // }
-    
+    @GET
+    @Path("/search/nome/{nome}")
+    public Response findByNome(@PathParam("nome") String nome) {
+        return Response.ok(produtoService.findByNome(nome)).build();
+    }
 
-    // @POST
-    // @Transactional
-    // public ProdutoResponseDTO create(ProdutoDTO dto) {
-    //     Produto produto = new Produto();
-    //     produto.setNome(dto.nome());
-    //     produto.setFornecedor(dto.fornecedor());
-    //     produto.setEstoque(dto.estoque());
-    //     produto.setDescricao(dto.descricao());
-    //     produto.setCategoria(dto.categoria());
-    //     produto.setCapacidade(dto.capacidade());
+    @POST
+    public Response create(ProdutoDTO dto) {
+        return 
+        Response.status(Status.CREATED).entity(ProdutoService.create(dto)).build();
+    }
 
-    //     return ProdutoResponseDTO.valueOf(produto);
+    @PUT
+    @Path("/{id}")
+    public Response update(@PathParam("id") Long id, EstadoDTO dto) {
+        produtoService.update(id, dto);
+        return Response.status(Status.NO_CONTENT).build();
+    }
 
-    // }
-
-    // @PUT
-    // @Transactional
-    // @Path("/{id}")
-    // public void update(@PathParam("id") Long id, ProdutoDTO dto) {
-    //     Produto produtoBanco =  produtoRepository.findById(id);
-
-    //     produtoBanco.setNome(dto.nome());
-    //     produtoBanco.setFornecedor(dto.fornecedor());
-    //     produtoBanco.setEstoque(dto.estoque());
-    //     produtoBanco.setDescricao(dto.descricao());
-    //     produtoBanco.setCategoria(dto.categoria());
-    //     produtoBanco.setCapacidade(dto.capacidade());
-  
-    // }
-
-    // @DELETE
-    // @Transactional
-    // @Path("/{id}")
-    // public void delete(@PathParam("id") Long id) {
-    //     produtoRepository.deleteById(id);
-    // }
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id) {
+        produtoService.delete(id);
+        return Response.status(Status.NO_CONTENT).build();
+    }
 }
